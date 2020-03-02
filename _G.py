@@ -13,7 +13,20 @@ APIKEY  = loadfile_with_resuce("secret/master.key", 'r') or os.environ['CLIPPER_
 
 GDriveScopes = ['https://www.googleapis.com/auth/drive']
 GDriveCredFilename = "secret/credentials.json"
-GDriveCredCache = "secret/gdrivecache.dat"
+GDriveCredCache = "secret/gdcredcache.dat"
 GDriveService = None
+DownloaderChunkSize = 1024 * 1024 * 16 # MB
+MaxWorkerCount = 8
+
+HttpStatus = {
+  'ok': 200,
+  'bad request': 400,
+  'forbidden': 403,
+  'not found': 404,
+  'unprocessable': 422,
+  'server overloaded': 503
+}
+
+ForbiddenFileChar = "\\\/:*<>\"?|"
 
 app = Flask(AppName)
