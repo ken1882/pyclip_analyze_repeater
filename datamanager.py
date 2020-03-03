@@ -54,7 +54,7 @@ def get_auth_creds():
 def load_creds_json():
   raw = _G.loadfile_with_resuce(_G.GDriveCredFilename, 'r')
   if not raw:
-    raw = os.environ['CLIPPER_GDRIVE_CRED']
+    raw = os.environ['CLIPPER_GDRIVE_CREDS']
   return json.loads(raw)
  
 def start_auth_session(creds):
@@ -69,12 +69,12 @@ def start_auth_session(creds):
  
   _G.GDriveService = build('drive', 'v3', credentials=creds)
  
-def init():
-  creds = get_auth_creds()
-  start_auth_session(creds)
- 
 def download_data_async(id):
   worker = Downloader(id)
   worker.setup()
   worker.start()
   return worker
+
+def init():
+  creds = get_auth_creds()
+  start_auth_session(creds)
